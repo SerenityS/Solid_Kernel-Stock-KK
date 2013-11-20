@@ -2740,6 +2740,111 @@ static int get_prop_charge_type(struct pm8921_chg_chip *chip)
 	return POWER_SUPPLY_CHARGE_TYPE_NONE;
 }
 
+<<<<<<< HEAD
+=======
+static int get_prop_batt_status(struct pm8921_chg_chip *chip)
+{
+	int batt_state = POWER_SUPPLY_STATUS_DISCHARGING;
+	int fsm_state = pm_chg_get_fsm_state(chip);
+	int i;
+#ifdef CONFIG_LGE_PM
+	/* jooyeong.lee@lge.com 2012-01-19 Change battery status sequence when start charging */
+	int batt_capacity;
+#endif
+
+	if (chip->ext_psy) {
+#ifdef CONFIG_BLX
+        if (get_prop_batt_capacity(chip) >= get_charginglimit())
+#else
+		if (chip->ext_charge_done)
+#endif
+			return POWER_SUPPLY_STATUS_FULL;
+		if (chip->ext_charging)
+			return POWER_SUPPLY_STATUS_CHARGING;
+	}
+
+#ifdef CONFIG_LGE_WIRELESS_CHARGER
+	if(wireless_is_plugged()) { //if(is_dc_chg_plugged_in(chip)) {
+		batt_state = wireless_batt_status();
+		return batt_state;
+	}
+#endif
+
+	for (i = 0; i < ARRAY_SIZE(map); i++)
+		if (map[i].fsm_state == fsm_state)
+			batt_state = map[i].batt_state;
+
+#ifdef CONFIG_LGE_PM
+	/* jooyeong.lee@lge.com 2012-01-19 Change battery status sequence when start charging */
+	if (batt_state == POWER_SUPPLY_STATUS_FULL) {
+#ifdef CONFIG_BATTERY_MAX17047
+#if defined(CONFIG_MACH_APQ8064_GVDCM)
+	if(lge_get_board_revno() > HW_REV_A)
+		batt_capacity = max17047_get_soc();
+	else
+		batt_capacity = get_prop_batt_capacity(chip);
+#else
+	batt_capacity = max17047_get_soc();
+#endif
+#elif defined (CONFIG_BATTERY_MAX17043)
+		batt_capacity = max17043_get_capacity(chip);
+#else
+		batt_capacity = get_prop_batt_capacity(chip);
+#endif
+		if (pm_chg_get_rt_status(chip, BATT_INSERTED_IRQ)
+			&& is_battery_valid(chip)
+			&& pm_chg_get_rt_status(chip, BAT_TEMP_OK_IRQ)
+			&& batt_capacity >= 100 ) {
+			return batt_state;
+		}
+
+		if (pm_chg_get_rt_status(chip, BATT_INSERTED_IRQ)
+			&& is_battery_valid(chip)
+			&& pm_chg_get_rt_status(chip, BAT_TEMP_OK_IRQ)
+			&& batt_capacity >= 0 && batt_capacity < 100) {
+			if ( pseudo_ui_charging == 1 )
+				batt_state = POWER_SUPPLY_STATUS_NOT_CHARGING;
+			else
+				batt_state = POWER_SUPPLY_STATUS_CHARGING;
+			return batt_state;
+		}
+	}
+#endif
+
+	if (fsm_state == FSM_STATE_ON_CHG_HIGHI_1) {
+#ifdef CONFIG_LGE_CHARGER_TEMP_SCENARIO
+		if (!pm_chg_get_rt_status(chip, BATT_INSERTED_IRQ)
+			|| !pm_chg_get_rt_status(chip, BAT_TEMP_OK_IRQ)
+			|| !pm_chg_get_rt_status(chip, CHGHOT_IRQ)
+			|| ((pseudo_ui_charging == 0)
+			    && (chg_batt_temp_state == CHG_BATT_STOP_CHARGING_STATE)))
+
+			batt_state = POWER_SUPPLY_STATUS_NOT_CHARGING;
+#else
+		if (!pm_chg_get_rt_status(chip, BATT_INSERTED_IRQ)
+			|| !pm_chg_get_rt_status(chip, BAT_TEMP_OK_IRQ)
+			|| pm_chg_get_rt_status(chip, CHGHOT_IRQ)
+			|| pm_chg_get_rt_status(chip, VBATDET_LOW_IRQ))
+
+			batt_state = POWER_SUPPLY_STATUS_NOT_CHARGING;
+#endif
+	}
+	
+#if defined(CONFIG_MACH_APQ8064_GK_KR) || defined(CONFIG_MACH_APQ8064_GV_KR)
+#ifdef CONFIG_LGE_CHARGER_TEMP_SCENARIO
+		if(((chg_batt_temp_state == CHG_BATT_STOP_CHARGING_STATE) && (pseudo_ui_charging == 1))
+			&& (is_usb_chg_plugged_in(chip))
+			&& max17043_get_capacity(chip) < 100){
+	
+			batt_state = POWER_SUPPLY_STATUS_NOT_CHARGING;
+			return batt_state;
+		}
+#endif
+#endif	
+	return batt_state;
+}
+
+>>>>>>> aff4708... BLX Added
 #define MAX_TOLERABLE_BATT_TEMP_DDC	680
 #define BATT_THERM_FAIL                 790
 static int get_prop_batt_temp(struct pm8921_chg_chip *chip, int *temp)
@@ -5368,7 +5473,7 @@ static int is_charging_finished(struct pm8921_chg_chip *chip,
 	int regulation_loop, fast_chg, vcp;
 	int rc;
 	static int last_vbat_programmed = -EINVAL;
-
+	
 	if (!is_ext_charging(chip)) {
 		/* return if the battery is not being fastcharged */
 		fast_chg = pm_chg_get_rt_status(chip, FASTCHG_IRQ);
@@ -5381,6 +5486,7 @@ static int is_charging_finished(struct pm8921_chg_chip *chip,
 		if (vcp == 1)
 			return CHG_IN_PROGRESS;
 
+<<<<<<< HEAD
 #ifdef CONFIG_LGE_PM
 		rc = pm_chg_get_rt_status(chip, VBATDET_LOW_IRQ);
 		pr_debug("vbatdet_low = %d\n", rc);
@@ -5388,6 +5494,13 @@ static int is_charging_finished(struct pm8921_chg_chip *chip,
 			return CHG_IN_PROGRESS;
 #endif
 
+=======
+		vbatdet_low = pm_chg_get_rt_status(chip, VBATDET_LOW_IRQ);
+		pr_debug("vbatdet_low = %d\n", vbatdet_low);
+		if (vbatdet_low ==  1)
+		    return CHG_IN_PROGRESS;
+		
+>>>>>>> aff4708... BLX Added
 		/* reset count if battery is hot/cold */
 		rc = pm_chg_get_rt_status(chip, BAT_TEMP_OK_IRQ);
 		pr_debug("batt_temp_ok = %d\n", rc);
@@ -5430,18 +5543,19 @@ static int is_charging_finished(struct pm8921_chg_chip *chip,
 			return CHG_IN_PROGRESS;
 		}
 #endif
-
 		regulation_loop = pm_chg_get_regulation_loop(chip);
 		if (regulation_loop < 0) {
 			pr_err("couldnt read the regulation loop err=%d\n",
 				regulation_loop);
 			return CHG_IN_PROGRESS;
 		}
+
 		pr_debug("regulation_loop=%d\n", regulation_loop);
 
 		if (regulation_loop != 0 && regulation_loop != VDD_LOOP)
 			return CHG_IN_PROGRESS;
 	} /* !is_ext_charging */
+<<<<<<< HEAD
 
 	/* reset count if battery chg current is more than iterm */
 	rc = pm_chg_iterm_get(chip, &iterm_programmed);
@@ -5565,6 +5679,11 @@ static void btc_override_worker(struct work_struct *work)
 	}
 
 	rc = get_prop_batt_temp(chip, &decidegc);
+=======
+	
+	/* reset count if battery chg current is more than iterm */
+	rc = pm_chg_iterm_get(chip, &iterm_programmed);
+>>>>>>> aff4708... BLX Added
 	if (rc) {
 		pr_info("Failed to read temperature\n");
 		goto fail_btc_temp;
@@ -5692,8 +5811,11 @@ static void eoc_worker(struct work_struct *work)
 		count = 0;
 		goto eoc_worker_stop;
 	}
-
+#ifdef CONFIG_BLX
+	if (end == CHG_FINISHED || get_prop_batt_capacity(chip) >= get_charginglimit()) {
+#else
 	if (end == CHG_FINISHED) {
+#endif
 		count++;
 	} else {
 		count = 0;
@@ -5710,14 +5832,20 @@ static void eoc_worker(struct work_struct *work)
 		}
 #endif
 		pm_chg_auto_enable(chip, 0);
-
+#ifdef CONFIG_BLX
+		if (is_ext_charging(chip) || get_prop_batt_capacity(chip) >= get_charginglimit())
+#else
 		if (is_ext_charging(chip))
+#endif
 			chip->ext_charge_done = true;
+//#ifdef CONFIG_BLX
 
+//#else
 		if (chip->is_bat_warm || chip->is_bat_cool)
 			chip->bms_notify.is_battery_full = 0;
 		else
 			chip->bms_notify.is_battery_full = 1;
+//#endif
 		/* declare end of charging by invoking chgdone interrupt */
 		chgdone_irq_handler(chip->pmic_chg_irq[CHGDONE_IRQ], chip);
 #ifdef CONFIG_LGE_PM
