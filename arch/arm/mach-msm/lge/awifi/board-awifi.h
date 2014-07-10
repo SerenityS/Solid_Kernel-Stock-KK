@@ -89,9 +89,9 @@ void apq8064_init_pmic(void);
 
 extern struct msm_camera_board_info apq8064_camera_board_info;
 
-/* LGE_CHANGE_S, For awifi Rev.A bring-up , 2013-06-11, seungmin.hong@lge.com */
+/*                                                                            */
 extern struct msm_camera_board_info apq8064_camera_board_info_revA;
-/* LGE_CHANGE_E, For awifi Rev.A bring-up , 2013-06-11, seungmin.hong@lge.com */
+/*                                                                            */
 
 /* Enabling flash LED for camera */
 extern struct msm_camera_board_info apq8064_lge_camera_board_info;
@@ -228,6 +228,6 @@ extern struct msm_rtb_platform_data apq8064_rtb_pdata;
 extern struct msm_cache_dump_platform_data apq8064_cache_dump_pdata;
 void apq8064_init_input(void);
 void __init apq8064_init_misc(void);
-//2013-05-29 goensoo.kim@lge.com [AWIFI/Touch] Enable atmel touchscreen driver for REV_A
+//                                                                                      
 void apq8064_awifi_init_input(void);
 #endif

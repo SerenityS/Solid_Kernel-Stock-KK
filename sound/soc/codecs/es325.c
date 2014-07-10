@@ -2693,10 +2693,10 @@ static int es325_put_internal_route_config(struct snd_kcontrol *kcontrol,
 #endif
 
 		/* Flag to setup slimbus channel for es325 */
-		/* jeremy.pi@lge.com
-		*   blocked ch mapping flag
-		*   controled by UCM
-		*/
+		/*                  
+                             
+                      
+  */
 //		es325_rx1_route_ena = 1;
 //		es325_tx1_route_ena = 1;
 //		es325_rx2_route_ena = 1;

@@ -881,7 +881,7 @@ void mmc_set_data_timeout(struct mmc_data *data, const struct mmc_card *card)
 			limit_us = 3000000;
 		else
 #ifdef CONFIG_MACH_LGE
-            /* LGE_UPDATE_S apply D1L patch */
+            /*                              */
             limit_us = 300000;
 #else
 			limit_us = 100000;

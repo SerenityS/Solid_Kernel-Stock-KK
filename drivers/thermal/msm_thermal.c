@@ -208,7 +208,7 @@ static void __cpuinit check_temp(struct work_struct *work)
 
 	if (temp >= msm_thermal_info.limit_temp_degC
 #if defined(CONFIG_MACH_APQ8064_GVAR_CMCC)
-//LGE_PM_L05E : samin.ryu, need check
+//                                   
 		|| temp <= msm_thermal_info.limit_temp_degC_low
 #endif
 		) {
@@ -227,7 +227,7 @@ static void __cpuinit check_temp(struct work_struct *work)
 	} else if ( (temp < msm_thermal_info.limit_temp_degC -
 		 msm_thermal_info.temp_hysteresis_degC)
 #if defined(CONFIG_MACH_APQ8064_GVAR_CMCC)
-//LGE_PM_L05E : samin.ryu, need check
+//                                   
 		 && (temp > msm_thermal_info.limit_temp_degC_low)
 #endif
 		) {
@@ -335,7 +335,7 @@ static void __cpuinit disable_msm_thermal(void)
 		return;
 
 #if defined(CONFIG_MACH_APQ8064_GVAR_CMCC)
-//LGE_PM_L05E : samin.ryu, need check
+//                                   
 	if (limited_max_freq == DEF_ALLOWED_MAX_FREQ) {
 		pr_info("msm_thermal: continue  max_freq = %d..\n", DEF_ALLOWED_MAX_FREQ);
 		return;

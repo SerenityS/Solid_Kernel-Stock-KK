@@ -80,7 +80,7 @@ enum battery_type {
 	BATT_PALLADIUM,
 	BATT_DESAY,
 #ifdef CONFIG_LGE_PM
-	BATT_LGE, /* LGE_UPDATE jungshik.park@lge.com 2012-04-18 battery type add */
+	BATT_LGE, /*                                                              */
 	BATT_1900_LGE,
 	BATT_2100_LGE,
 	BATT_2200_LGE,

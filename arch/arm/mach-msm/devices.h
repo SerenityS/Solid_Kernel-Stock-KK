@@ -108,7 +108,7 @@ extern struct platform_device apq8064_device_qup_i2c_gsbi7;
 
 #if defined(CONFIG_LGE_BROADCAST_TDMB) || defined(CONFIG_LGE_BROADCAST_ONESEG)
 extern struct platform_device apq8064_device_qup_spi_gsbi5;
-#endif	 /* CONFIG_LGE_BROADCAST */
+#endif	 /*                      */
 
 extern struct platform_device apq8064_slim_ctrl;
 extern struct platform_device apq8064_device_ssbi_pmic1;

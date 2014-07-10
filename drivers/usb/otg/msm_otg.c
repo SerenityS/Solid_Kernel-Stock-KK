@@ -1280,12 +1280,12 @@ static void msm_otg_notify_charger(struct msm_otg *motg, unsigned mA)
 		mA = IDEV_ACA_CHG_LIMIT;
 
 #ifdef CONFIG_LGE_PM
-	/* We replace original current limit into LGE
-	 * customized current limit only if cable is DCP or SDP.
-	 * XXX: In case of SDP(USB), android gadget will set current again.
-	 */
+	/*                                           
+                                                         
+                                                                    
+  */
 	if (lge_pm_get_cable_type() != NO_INIT_CABLE) {
-		/*LGE_S jungwoo.yun@lge.com 2012-08-07 iusbmax set to 1100mA in 56K/910K cable and battery present*/
+		/*                                                                                                */
 		if((lge_pm_get_cable_type() == CABLE_56K || lge_pm_get_cable_type() == CABLE_910K) && pm8921_is_real_battery_present() == 1)
 		{
 			mA = 1100;
@@ -1296,7 +1296,7 @@ static void msm_otg_notify_charger(struct msm_otg *motg, unsigned mA)
 			mA = 1100;
 			pr_info("LGE_BOOT_MODE_FACTORY2 && pm8921_is_battery_present( ) 1100mA\n");
 		}
-		/*LGE_E jungwoo.yun@lge.com 2012-08-07 iusbmax set to 1100mA in 910K cable and battery present*/
+		/*                                                                                            */
 		else if(motg->chg_type == USB_SDP_CHARGER)
 			mA = lge_pm_get_usb_current();
 		else if (motg->chg_type == USB_DCP_CHARGER)
@@ -1501,7 +1501,7 @@ static void msm_hsusb_vbus_power(struct msm_otg *motg, bool on)
 		return;
 
 	if (motg->pdata->vbus_power) {
-//2013-04-25 Eunok-Lee(michelle.lee@lge.com)[AWIFI/OTG] Fix the normal usb detection and charging issue with OTG cable [START]
+//                                                                                                                            
 #if 1
 		if (on) {
 			msm_otg_notify_host_mode(motg, on);
@@ -1523,7 +1523,7 @@ static void msm_hsusb_vbus_power(struct msm_otg *motg, bool on)
 			vbus_is_on = on;
 		return;
 #endif
-//2013-04-25 Eunok-Lee(michelle.lee@lge.com)[AWIFI/OTG] Fix the normal usb detection and charging issue with OTG cable [END]
+//                                                                                                                          
 
 	}
 
@@ -2784,10 +2784,10 @@ static void msm_otg_sm_work(struct work_struct *w)
 			clear_bit(A_BUS_REQ, &motg->inputs);
 			cancel_delayed_work_sync(&motg->chg_work);
 #ifdef CONFIG_MACH_APQ8064_ALTEV
-	/* FIXME : boot mode is not set.
-	 * 2012-09-20 sungho.jung@lge.com
-	 * #ifdef CONFIG_LGE_PM
-	 */
+	/*                              
+                                  
+                        
+  */
 		if((boot_mode != LGE_BOOT_MODE_FACTORY) &&
 		   (boot_mode != LGE_BOOT_MODE_FACTORY2) &&
 		   (boot_mode != LGE_BOOT_MODE_PIFBOOT) &&
@@ -2817,10 +2817,10 @@ static void msm_otg_sm_work(struct work_struct *w)
 			 */
 #if defined(CONFIG_USB_G_LGE_ANDROID) && defined(CONFIG_USB_OTG)
 			/*
-			 * 2013-01-21, seokjeong.hong@lge.com
-			 * To prevent abnormal behaviors, Inserting unauthorized cable w/180K or 200K ohm resistor
-			 * value on their ID pin. Do not check ID state before entering into low power mode.
-			 */
+                                        
+                                                                                             
+                                                                                       
+    */
 			if(lge_cable_info.cable_type == CABLE_180K || lge_cable_info.cable_type == CABLE_200K || lge_cable_info.cable_type == CABLE_220K
 				|| lge_cable_info.cable_type == CABLE_620K
 				|| lge_cable_info.cable_type == CABLE_330K)
@@ -3543,7 +3543,7 @@ static void msm_otg_set_vbus_state(int online)
 
 #if defined(CONFIG_USB_G_LGE_ANDROID) && defined(CONFIG_USB_OTG)
 	queue_delayed_work(system_nrt_wq, &motg->usb_id_sel_work, msecs_to_jiffies(0));
-#endif// 20130128 for Avoiding the MutexLock api use while running IRQ Handler jaegeun.jung@lge.com
+#endif//                                                                                           
 
 	if (!init) {
 		init = true;
@@ -3622,10 +3622,10 @@ static void msm_pmic_id_w(struct work_struct *w)
     }
 
 	/*
-	 * 2013-01-21, seokjeong.hong@lge.com
-	 * To prevent abnormal behaviors, Inserting unauthorized cable w/180K or 200K ohm resistor
-	 * value on their ID pin.
-	 */
+                                      
+                                                                                           
+                          
+  */
 
 	if(lge_cable_info.cable_type == CABLE_180K || lge_cable_info.cable_type == CABLE_200K || lge_cable_info.cable_type == CABLE_220K
 		|| lge_cable_info.cable_type == CABLE_620K
@@ -3636,10 +3636,10 @@ static void msm_pmic_id_w(struct work_struct *w)
 	}
 
 	/*
-	 * 2013-02-04, seokjeong.hong@lge.com
-	 * To prevent abnormal pmic_id_irq interrupt by noise or glitch signal case.
-	 * otg_detect flags is set at OTG_STATE_A_WAIT_VRISE and clear at OTG_STATE_A_WAIT_VFALL.
-	 */
+                                      
+                                                                             
+                                                                                          
+  */
 
 #if defined CONFIG_MACH_APQ8064_ALTEV
     if (!((boot_mode == LGE_BOOT_MODE_FACTORY)    ||
@@ -3685,9 +3685,9 @@ static void usb_id_sel_w(struct work_struct *w)
 
     pr_info("%s: VBUS State Change !\n",__func__);
 
-    /* 2013-02-15, seokjeong.hong@lge.com
-     * to read adc and store cable infomation on booting process  to prevent abnormal OTG interrupt,
-     * inserting abnormal usb cable(id pin resisor value : 180K, 200K or 220K) to only device side connector at powering on.
+    /*                                   
+                                                                                                    
+                                                                                                                            
      */
 
     if(first_boot) {
@@ -3738,7 +3738,7 @@ static void usb_id_sel_w(struct work_struct *w)
         }
     }
 }
-#endif// 20130128 for Avoiding the MutexLock api use while running IRQ Handler jaegeun.jung@lge.com
+#endif//                                                                                           
 
 static irqreturn_t msm_pmic_id_irq(int irq, void *data)
 {
@@ -4398,7 +4398,7 @@ static int __init msm_otg_probe(struct platform_device *pdev)
 #endif
 #if defined(CONFIG_USB_G_LGE_ANDROID) && defined(CONFIG_USB_OTG)
 	INIT_DELAYED_WORK(&motg->pmic_id_work, msm_pmic_id_w);
-	INIT_DELAYED_WORK(&motg->usb_id_sel_work, usb_id_sel_w);// 20130128 for Avoiding the MutexLock api use while running IRQ Handler jaegeun.jung@lge.com 
+	INIT_DELAYED_WORK(&motg->usb_id_sel_work, usb_id_sel_w);//                                                                                            
 #endif
 	setup_timer(&motg->id_timer, msm_otg_id_timer_func,
 				(unsigned long) motg);
@@ -4575,7 +4575,7 @@ static int __devexit msm_otg_remove(struct platform_device *pdev)
 	cancel_delayed_work_sync(&motg->check_ta_work);
 #if defined(CONFIG_USB_G_LGE_ANDROID) && defined(CONFIG_USB_OTG)
 	cancel_delayed_work_sync(&motg->pmic_id_work);
-    cancel_delayed_work_sync(&motg->usb_id_sel_work);// 20130128 for Avoiding the MutexLock api use while running IRQ Handler jaegeun.jung@lge.com 
+    cancel_delayed_work_sync(&motg->usb_id_sel_work);//                                                                                            
 #endif
 	cancel_work_sync(&motg->sm_work);
 

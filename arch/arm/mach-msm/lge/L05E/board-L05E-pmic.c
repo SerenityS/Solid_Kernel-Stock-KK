@@ -35,7 +35,7 @@
 #include "board-L05E.h"
 #else
 #include "board-8064.h"
-#endif //#if defined(CONFIG_MACH_LGE)
+#endif //                            
 #ifdef CONFIG_BATTERY_MAX17047
 #include <linux/max17047_battery.h>
 #endif
@@ -128,7 +128,7 @@ struct pm8xxx_mpp_init {
 #ifdef CONFIG_LGE_PM
 /* Initial PM8921 GPIO configurations */
 static struct pm8xxx_gpio_init pm8921_gpios[] __initdata = {
-// LGE_BROADCAST_ONESEG {
+//                       
 // TDMBG, 1-Seg & MMBi different RF S/W problem
 #if defined(CONFIG_LGE_BROADCAST_TDMB)
 	PM8921_GPIO_OUTPUT(11, 0, HIGH), /* DMB Retractble Ant. Select */
@@ -137,8 +137,8 @@ static struct pm8xxx_gpio_init pm8921_gpios[] __initdata = {
 
 #if defined(CONFIG_LGE_BROADCAST_ONESEG) && defined(CONFIG_LGE_BROADCAST_ONESEG_MB86A35S) //GJ_DCM
 	PM8921_GPIO_OUTPUT(11, 1, HIGH), /* DMB Retractble Ant. Select */
-#endif //defined(CONFIG_LGE_BROADCAST_ONESEG) && defined(CONFIG_LGE_BROADCAST_ONESEG_MB86A35S)
-// LGE_BROADCAST_ONESEG }
+#endif //                                                                                     
+//                       
 
 #if defined(CONFIG_LGE_IRDA)
 	PM8921_GPIO_OUTPUT(20, 0, HIGH), /* APQ_IRDA_PWDN */
@@ -166,7 +166,7 @@ static struct pm8xxx_gpio_init pm8921_gpios[] __initdata = {
 #endif
 //ADD: 0019632: [F200][BT] Bluetooth board bring-up
 	PM8921_GPIO_OUTPUT(30, 0, HIGH),
-//END: 0019632 chanha.park@lge.com 2012-05-31
+//                                           
 };
 #else //Qualcomm original
 /* Initial PM8921 GPIO configurations */
@@ -194,7 +194,7 @@ static struct pm8xxx_gpio_init pm8921_gpios[] __initdata = {
 	PM8921_GPIO_OUTPUT(29, 0, HIGH),
 #endif
 };
-#endif //#if defined(CONFIG_MACH_LGE)
+#endif //                            
 #ifdef CONFIG_SWITCH_MAX1462X
 static struct pm8xxx_gpio_init pm8921_max1462x_gpios[] __initdata = {
 	PM8921_GPIO_OUTPUT(31, 0, HIGH), /* PMIC - MAX1462X_EAR_MIC_EN */
@@ -273,7 +273,7 @@ static struct pm8xxx_gpio_init pm8921_sglte2_gpios[] __initdata = {
 
 #ifdef CONFIG_SWITCH_MAX1462X
 static struct pm8xxx_mpp_init pm8xxx_max1462x_mpps[] __initdata = {
-	/* add by ehgrace.kim@lge.com for headset */
+	/*                                        */
 	PM8921_MPP_INIT(9, D_INPUT, PM8921_MPP_DIG_LEVEL_S4, DIN_TO_INT),
 	PM8921_MPP_INIT(10, D_INPUT, PM8921_MPP_DIG_LEVEL_S4, DIN_TO_INT),
 	/*MPP1 is used to read ADC for headset 3 Button read key*/
@@ -282,7 +282,7 @@ static struct pm8xxx_mpp_init pm8xxx_max1462x_mpps[] __initdata = {
 #endif
 
 
-// LGE_BROADCAST_ONESEG {
+//                       
 /*[1seg] L05E_DCM Rev.C- Set gpio_38 input and pull-down 10uA register to prevent leakage power [start] */
 #if defined(CONFIG_MACH_APQ8064_L05E)
 static struct pm8xxx_gpio_init L05E_rev_c_pm8921_gpio_38[] __initdata = {
@@ -292,7 +292,7 @@ static struct pm8xxx_gpio_init L05E_rev_c_pm8921_gpio_38[] __initdata = {
 };
 #endif
 /*[1seg] L05E_DCM Rev.C- Set gpio_38 input and pull-down 10uA register to prevent leakage power [end] */
-// LGE_BROADCAST_ONESEG }
+//                       
 void __init apq8064_configure_gpios(struct pm8xxx_gpio_init *data, int len)
 {
 	int i, rc;
@@ -325,7 +325,7 @@ void __init apq8064_pm8xxx_gpio_mpp_init(void)
 	apq8064_configure_gpios(pm8921_max1462x_gpios, ARRAY_SIZE(pm8921_max1462x_gpios));
 #endif
 
-// LGE_BROADCAST_ONESEG {
+//                       
 /*[1seg] L05E_DCM Rev.C- Set gpio_38 input and pull-down 10uA register to prevent leakage power [start] */
 #if defined(CONFIG_MACH_APQ8064_L05E)
 	if( lge_get_board_revno() >= HW_REV_C ) {
@@ -333,7 +333,7 @@ void __init apq8064_pm8xxx_gpio_mpp_init(void)
 	}
 #endif
 /*[1seg] L05E_DCM Rev.C- Set gpio_38 input and pull-down 10uA register to prevent leakage power [end] */
-// LGE_BROADCAST_ONESEG }
+//                       
 
 	if (machine_is_apq8064_cdp() || machine_is_apq8064_liquid()) {
 		if (socinfo_get_pmic_model() != PMIC_MODEL_PM8917)
@@ -519,8 +519,8 @@ static struct pm8xxx_adc_amux apq8064_pm8921_adc_channels_data[] = {
 		ADC_DECIMATION_TYPE2, ADC_SCALE_DEFAULT},
 	{"xo_therm", CHANNEL_MUXOFF, CHAN_PATH_SCALING1, AMUX_RSV0,
 		ADC_DECIMATION_TYPE2, ADC_SCALE_XOTHERM},
-//LGE_PM_L05E, samin,ryu, need check
-/* 2012-06-05 cs.kim@lge.com implement Thermal Profile log. */
+//                                  
+/*                                                          */
 	{"pa_therm0", ADC_MPP_1_AMUX3, CHAN_PATH_SCALING1, AMUX_RSV1,
 		ADC_DECIMATION_TYPE2, ADC_SCALE_APQ_THERM},
 	{"usb_id_device", ADC_MPP_1_AMUX6, CHAN_PATH_SCALING1, AMUX_RSV1,
@@ -604,7 +604,7 @@ static struct pm8921_charger_platform_data apq8064_pm8921_chg_pdata __devinitdat
 	.vin_min			= 4400,
 #ifdef CONFIG_LGE_CHARGER_TEMP_SCENARIO
 	/* Configuration of cool and warm thresholds (JEITA compliance only) */
-/* CONFIG_LGE_PM Start Qulcomm charging scenario off kwangjae1.lee@lge.com */
+/*                                                                         */
 	.cool_temp		= INT_MIN, /* 10 */	/* 10 degree celsius */
 	.warm_temp		= INT_MIN, /* 40 */	/* 40 degree celsius */
 	.cool_bat_chg_current	= 350,	/* 350 mA (max value = 2A) */
@@ -651,7 +651,7 @@ static struct pm8921_charger_platform_data apq8064_pm8921_chg_pdata __devinitdat
 	.thermal_levels		= ARRAY_SIZE(apq8064_pm8921_therm_mitigation),
 	/* for led on, off control */
 	.led_src_config = LED_SRC_5V,
-	/*LGE_CHANGE_E, jungwoo.yun@lge.com for led on, off control*/
+	/*                                                         */
 /* Be omitted OCT code */
 	//.rconn_mohm    = 18,
 	.enable_tcxo_warmup_delay = true,
@@ -816,7 +816,7 @@ struct i2c_registry {
 	int                    len;
 };
 
-/* BEGIN: hiro.kwon@lge.com 2011-12-22 RCOMP update when the temperature of the cell changes */
+/*                                                                                           */
 
 // From GK
 struct max17048_platform_data L05E_max17048_pdata = {
@@ -833,7 +833,7 @@ struct max17048_platform_data L05E_max17048_pdata = {
 	.soc_cal_data = NULL,
 };
 */
-/* END: hiro.kwon@lge.com 2011-12-22 */
+/*                                   */
 
 static struct i2c_board_info max17048_i2c_info[] = {
 	{
@@ -852,10 +852,10 @@ static struct i2c_registry L05E_i2c_pm_subsystem __initdata = {
 
 void __init lge_add_i2c_pm_subsystem_devices(void)
 {
-	/* LGE_CHANGE
-	 * 2011-12-03, hyuncheol0.kim@lge.com
-	 * Work-around code to support old H/W revision.
-	 */
+	/*           
+                                      
+                                                 
+  */
 	/* Run the array and install devices as appropriate */
 	i2c_register_board_info(L05E_i2c_pm_subsystem.bus,
 				L05E_i2c_pm_subsystem.info,
@@ -885,7 +885,7 @@ void __init apq8064_init_pmic(void)
 	}
 
 #ifndef CONFIG_MACH_LGE
-/* LGE_S jungshik.park@lge.com 2012-04-18 for lge battery type */
+/*                                                             */
 	if (machine_is_apq8064_mtp()) {
 		apq8064_pm8921_bms_pdata.battery_type = BATT_PALLADIUM;
 	} else if (machine_is_apq8064_liquid()) {
@@ -896,7 +896,7 @@ void __init apq8064_init_pmic(void)
 
 	if (!machine_is_apq8064_mtp() && !machine_is_apq8064_liquid())
 		apq8064_pm8921_chg_pdata.battery_less_hardware = 1;
-/* LGE_E jungshik.park@lge.com 2012-04-18 for lge battery type */
+/*                                                             */
 #endif
 
 	if (machine_is_mpq8064_hrd())

@@ -504,7 +504,7 @@ void __init lge_add_panic_handler_devices(void)
 {
 	platform_device_register(&panic_handler_device);
 }
-#endif /* CONFIG_LGE_CRASH_HANDLER */
+#endif /*                          */
 
 #ifdef CONFIG_LGE_ECO_MODE
 static struct platform_device lge_kernel_device = {

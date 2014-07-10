@@ -2244,7 +2244,7 @@ wl_android_set_miracast(struct net_device *dev, char *command, int total_len)
 		/* setting mchan_algo to platform specific value */
 		config.iovar = "mchan_algo";
 
-#ifdef CUSTOMER_HW10 /*CSP730611, added by cheolsook.lee@lge.com, 20140204 */
+#ifdef CUSTOMER_HW10 /*                                                    */
 		/* checck for wlan0 beacon interval, in case over 300ms don't use mchan_algo */
 		ret = wldev_ioctl(dev, WLC_GET_BCNPRD, &val, sizeof(int), false);
 		if (!ret && val > 100) {

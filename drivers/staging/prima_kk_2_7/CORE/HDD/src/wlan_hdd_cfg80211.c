@@ -626,7 +626,7 @@ int wlan_hdd_cfg80211_init(struct device *dev,
        || pCfg->isCcxIniFeatureEnabled
 #endif
     )
-#if 0  // LGE_CHANGE, hyunseong.lee@lge.com, Do not use SUPPORTS_FW_ROMA because we support BSSID selection by wpa_supplicant. SR_01496649
+#if 0  //                                                                                                                                 
     {
         wiphy->flags |= WIPHY_FLAG_SUPPORTS_FW_ROAM;
     }

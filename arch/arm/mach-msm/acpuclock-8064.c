@@ -439,7 +439,7 @@ static struct acpu_level tbl_PVS6_2000MHz_factory_1026[] __initdata = {
 	{ 0, { 0 } }
 };
 
-#endif //CONFIG_LGE_PM
+#endif //             
 static struct acpu_level tbl_slow[] __initdata = {
 	{ 1, {   384000, PLL_8, 0, 0x00 }, L2(0),   975000 },
 	{ 0, {   432000, HFPLL, 2, 0x20 }, L2(6),  1000000 },
@@ -1010,7 +1010,7 @@ static int __init acpuclk_8064_probe(struct platform_device *pdev)
 			acpuclk_8064_params.pvs_tables = pvs_tables;
 		}
 	}
-#endif //CONFIG_LGE_PM
+#endif //             
 	if (cpu_is_apq8064ab() ||
 		SOCINFO_VERSION_MAJOR(socinfo_get_version()) == 2) {
 		acpuclk_8064_params.hfpll_data->low_vdd_l_max = 37;

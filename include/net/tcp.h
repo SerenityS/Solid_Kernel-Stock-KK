@@ -97,7 +97,7 @@ extern void tcp_time_wait(struct sock *sk, int state, int timeo);
 				 * RFC1122 says that the limit is 100 sec.
 				 * 15 is ~13-30min depending on RTO.
 				 */
-/* 2012-01-17 jk.soh@lge.com LGP_DATA_TCPIP_TCP_SYN_RETRY_CONFIG_UPLUS [START]*/
+/*                                                                            */
 #if defined(CONFIG_MACH_APQ8064_GKU) || defined(CONFIG_MACH_APQ8064_OMEGAR) || defined(CONFIG_MACH_APQ8064_OMEGA) || defined(CONFIG_MACH_APQ8064_J1U)
 #define TCP_SYN_RETRIES	 4	/* number of times to retry active opening a
 				 * connection: ~180sec is RFC minimum	*/
@@ -105,7 +105,7 @@ extern void tcp_time_wait(struct sock *sk, int state, int timeo);
 #define TCP_SYN_RETRIES	 5	/* number of times to retry active opening a
 				 * connection: ~180sec is RFC minimum	*/
 #endif
-/* 2012-01-17 jk.soh@lge.com LGP_DATA_TCPIP_TCP_SYN_RETRY_CONFIG_UPLUS [END]*/
+/*                                                                          */
 
 #define TCP_SYNACK_RETRIES 5	/* number of times to retry passive opening a
 				 * connection: ~180sec is RFC minimum	*/

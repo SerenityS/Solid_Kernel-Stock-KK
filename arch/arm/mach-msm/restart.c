@@ -236,7 +236,7 @@ void set_kernel_crash_magic_number(void)
 	else
 		__raw_writel(restart_mode, restart_reason);
 }
-#endif /* CONFIG_LGE_CRASH_HANDLER */
+#endif /*                          */
 
 void msm_restart(char mode, const char *cmd)
 {
@@ -288,7 +288,7 @@ void msm_restart(char mode, const char *cmd)
 #if defined(CONFIG_MACH_APQ8064_ALTEV)
 		/*[start] Power Off for Testmode(#250-105-1)*/
 		else if(!strncmp(cmd,"diag_power_off",14)) {
-			/*LGE_CHANGE_S 2012-08-11 jungwoo.yun@lge.com */
+			/*                                            */
 			__raw_writel(0x77665503, restart_reason);
 		}
 		/*[end] Power Off for Testmode(#250-105-1)*/
@@ -303,7 +303,7 @@ void msm_restart(char mode, const char *cmd)
 	if (in_panic == 1)
 		set_kernel_crash_magic_number();
 reset:
-#endif /* CONFIG_LGE_CRASH_HANDLER */
+#endif /*                          */
 
 	__raw_writel(0, msm_tmr0_base + WDT0_EN);
 #ifndef CONFIG_LGE_BITE_RESET

@@ -58,7 +58,7 @@
 
 #include "lg_dm_tty.h"
 #include "diagfwd_bridge.h"
-#include <mach/subsystem_restart.h> /* LGE_MODEM_RESET, 2014-02-10, donggee.im@lge.com */
+#include <mach/subsystem_restart.h> /*                                                 */
 
 #define DM_TTY_IOCTL_MAGIC		'J'
 #define DM_TTY_MODEM_OPEN		_IOWR(DM_TTY_IOCTL_MAGIC, 0x01, short)
@@ -66,7 +66,7 @@
 #define DM_TTY_MODEM_STATUS 	_IOWR(DM_TTY_IOCTL_MAGIC, 0x03, short)
 #define DM_TTY_DATA_TO_APP		_IOWR(DM_TTY_IOCTL_MAGIC, 0x04, short)
 #define DM_TTY_DATA_TO_USB		_IOWR(DM_TTY_IOCTL_MAGIC, 0x05, short)
-#define DM_TTY_MODEM_RESET		_IOWR(DM_TTY_IOCTL_MAGIC, 0x06, short) /* LGE_MODEM_RESET, 2014-02-10, donggee.im@lge.com */
+#define DM_TTY_MODEM_RESET		_IOWR(DM_TTY_IOCTL_MAGIC, 0x06, short) /*                                                 */
 
 #define DM_TTY_MODULE_NAME		"DM_APP"
 #define MAX_DM_TTY_DRV		1
@@ -553,7 +553,7 @@ static int lge_dm_tty_ioctl(struct tty_struct *tty, unsigned int cmd,
 {
 	short modem_number, result;
 	struct dm_tty *lge_dm_tty_drv = NULL;
-	int status = 0; /* LGE_MODEM_RESET, 2014-02-10, donggee.im@lge.com */
+	int status = 0; /*                                                 */
 	int is_all_closed, i;
 	int index=MODEM_DATA;
 
@@ -779,7 +779,7 @@ static int lge_dm_tty_ioctl(struct tty_struct *tty, unsigned int cmd,
 				"result = %d\n", __func__, result);
 		break;
 
-	/* [LGE_CHANGE_S] LGE_MODEM_RESET, 2014-02-10, donggee.im@lge.com */
+	/*                                                                */
 	case DM_TTY_MODEM_RESET:
 		if (copy_from_user((void *)&modem_number, (const void *)arg,
 			sizeof(modem_number)) == 0)
@@ -795,7 +795,7 @@ static int lge_dm_tty_ioctl(struct tty_struct *tty, unsigned int cmd,
 				"DM_TTY_MODEM_RESET"
 				"result = %d\n", __func__, result);
 		break;
-	/* [LGE_CHANGE_E] LGE_MODEM_RESET, 2014-02-10, donggee.im@lge.com */
+	/*                                                                */
 
 	default:
 		pr_info(DM_TTY_MODULE_NAME ": %s:"

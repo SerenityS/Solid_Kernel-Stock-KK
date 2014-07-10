@@ -545,7 +545,7 @@ struct platform_device apq8064_device_qup_spi_gsbi5 = {
 	.num_resources	= ARRAY_SIZE(resources_qup_spi_gsbi5),
 	.resource	= resources_qup_spi_gsbi5,
 };
-#endif /* CONFIG_LGE_BROADCAST */
+#endif /*                      */
 #if defined( CONFIG_LGE_FELICA ) || defined(CONFIG_LGE_NFC_SONY_CXD2235AGG)
 static struct resource resources_uart_gsbi6[] = {
     {
@@ -600,7 +600,7 @@ struct platform_device apq8064_device_felica_gsbi3 = {
        .num_resources  = ARRAY_SIZE(resources_uart_felica_gsbi3),
        .resource       = resources_uart_felica_gsbi3,
 };
-#endif /* CONFIG_LGE_FELICA */
+#endif /*                   */
 
 static struct resource resources_qup_i2c_gsbi5[] = {
 	{
@@ -653,7 +653,7 @@ struct platform_device apq8064_device_qup_i2c_gsbi5 = {
 #endif
 /* jinyoun.park*/
 
-//BEGIN: 0019632 chanha.park@lge.com 2012-05-31
+//                                             
 //ADD: 0019632: [F200][BT] Bluetooth board bring-up
 /* GSBI 6 used into UARTDM Mode */
 static struct resource msm_uart_dm6_resources[] = {

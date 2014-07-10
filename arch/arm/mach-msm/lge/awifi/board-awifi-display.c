@@ -87,7 +87,7 @@ extern int refresh_qlut_display(void);
 #ifdef LGE_DSDR_SUPPORT
 #define MSM_FB_EXT_BUF_SIZE \
         (roundup((1920 * 1088 * 4), 4096) * 3) /* 4 bpp x 3 page */
-#else  /* LGE_DSDR_SUPPORT */
+#else  /*                  */
 #ifdef CONFIG_FB_MSM_HDMI_MSM_PANEL
 #define MSM_FB_EXT_BUF_SIZE \
 		(roundup((1920 * 1088 * 2), 4096) * 1) /* 2 bpp x 1 page */
@@ -97,7 +97,7 @@ extern int refresh_qlut_display(void);
 #else
 #define MSM_FB_EXT_BUF_SIZE	0
 #endif /* CONFIG_FB_MSM_HDMI_MSM_PANEL */
-#endif /* LGE_DSDR_SUPPORT */
+#endif /*                  */
 
 #ifdef CONFIG_FB_MSM_WRITEBACK_MSM_PANEL
 #if defined(CONFIG_FB_MSM_MIPI_LGIT_VIDEO_FHD_PT) ||\
@@ -178,7 +178,7 @@ unsigned char apq8064_mhl_display_enabled(void)
 }
 
 static void set_mdp_clocks_for_wuxga(void);
-#endif /* CONFIG_MACH_LGE */
+#endif /*                 */
 
 static int msm_fb_detect_panel(const char *name)
 {
@@ -228,7 +228,7 @@ static int msm_fb_detect_panel(const char *name)
 
 #else
 	return 0;
-#endif /* CONFIG_MACH_LGE */
+#endif /*                 */
 }
 
 static struct msm_fb_platform_data msm_fb_pdata = {
@@ -386,7 +386,7 @@ static struct platform_device kcal_platrom_device = {
 		.platform_data = &kcal_pdata,
 	}
 };
-#endif /* CONFIG_LGE_KCAL */
+#endif /*                 */
 
 static struct resource hdmi_msm_resources[] = {
 	{
@@ -850,7 +850,7 @@ static struct platform_device mipi_dsi_toshiba_panel_device = {
 	}
 };
 
-#endif  /* LGE Not Used */
+#endif  /*              */
 
 static struct msm_bus_vectors dtv_bus_init_vectors[] = {
 	{
@@ -1210,7 +1210,7 @@ static int mipi_lgit_backlight_level(int level, int max, int min)
 	return 0;
 }
 
-/* LGE_CHANGE_START:ilhwan.ahn@lge.com, 2013.05.22, Change the initial sest for AWiFi */
+/*                                                                                    */
 static char exit_sleep_mode             [2] = {0x11,0x00};
 static char display_on                  [2] = {0x29,0x00};
 static char display_off                 [2] = {0x28,0x00};
@@ -1494,7 +1494,7 @@ static struct platform_device mipi_dsi_lgit_panel_device_noCABC = {
 	}
 };
 #endif
-/* LGE_CHANGE_END:ilhwan.ahn@lge.com, 2013.05.22, Change the initial sest for AWiFi */
+/*                                                                                  */
 
 static struct platform_device *awifi_panel_devices[] __initdata = {
 #if defined(CONFIG_FB_MSM_MIPI_LGIT_VIDEO_WUXGA_PT) ||\
@@ -1526,14 +1526,14 @@ void __init apq8064_init_fb(void)
 
 #ifndef CONFIG_MACH_LGE
 	platform_device_register(&lvds_chimei_panel_device);
-#endif /* CONFIG_MACH_LGE*/
+#endif /*                */
 
 #ifdef CONFIG_FB_MSM_WRITEBACK_MSM_PANEL
 	platform_device_register(&wfd_panel_device);
 	platform_device_register(&wfd_device);
 #endif /* CONFIG_FB_MSM_WRITEBACK_MSM_PANEL */
 
-/* LGE_CHANGE_START: ilhwan.ahn@lge.com, 2013.05.27,  For the one-binary, runtime configuration */
+/*                                                                                              */
     lge_board_rev = lge_get_board_revno();
 #ifdef CONFIG_SUPPORT_EVB2_BD
 	if (lge_board_rev == HW_REV_EVB2) {
@@ -1541,7 +1541,7 @@ void __init apq8064_init_fb(void)
 		mipi_dsi_lgit_panel_device.dev.platform_data = &mipi_lgit_pdata_LD089WU1;
 	}
 #endif	
-/* LGE_CHANGE_END: ilhwan.ahn@lge.com, 2013.05.27,  For the one-binary, runtime configuration */
+/*                                                                                            */
 #if defined(CONFIG_LGE_BACKLIGHT_CABC)
 
 // [altev][bsp display], sunghun1.jung@lgepartner.com, 20131112 Enable  CABC, regardless of hw_rev {
@@ -1568,12 +1568,12 @@ void __init apq8064_init_fb(void)
 		platform_device_register(&mipi_dsi_toshiba_panel_device);
 	if (machine_is_mpq8064_dtv())
 		platform_device_register(&lvds_frc_panel_device);
-#endif /* CONFIG_MACH_LGE */
+#endif /*                 */
 
 	msm_fb_register_device("mdp", &mdp_pdata);
 #ifndef CONFIG_MACH_LGE
 	msm_fb_register_device("lvds", &lvds_pdata);
-#endif /* CONFIG_MACH_LGE */
+#endif /*                 */
 	msm_fb_register_device("mipi_dsi", &mipi_dsi_pdata);
 	platform_device_register(&hdmi_msm_device);
 	msm_fb_register_device("dtv", &dtv_pdata);
@@ -1648,7 +1648,7 @@ void __init apq8064_set_display_params(char *prim_panel, char *ext_panel,
 	msm_fb_pdata.ext_resolution = resolution;
         hdmi_msm_data.is_mhl_enabled = mhl_display_enabled;
 }
-#endif /* CONFIG_MACH_LGE */
+#endif /*                 */
 
 #define I2C_SURF 1
 #define I2C_FFA  (1 << 1)
@@ -1958,7 +1958,7 @@ void __init register_i2c_backlight_devices(void)
 	else
 		pr_err("unmatched machine ID in register_i2c_devices\n");
 
-/* LGE_CHANGE_START: ilhwan.ahn@lge.com, 2013.05.27,  For the one-binary */
+/*                                                                       */
 #ifdef CONFIG_SUPPORT_EVB2_BD
 #if defined(CONFIG_BACKLIGHT_I2C_BL)
 	if (lge_get_board_revno() == HW_REV_EVB2) {
@@ -1973,7 +1973,7 @@ void __init register_i2c_backlight_devices(void)
 	}
 #endif
 #endif
-/* LGE_CHANGE_END: ilhwan.ahn@lge.com, 2013.05.27,  For the one-binary */
+/*                                                                     */
 
 	/* Run the array and install devices as appropriate */
 	for (i = 0; i < ARRAY_SIZE(apq8064_i2c_backlight_device); ++i) {
