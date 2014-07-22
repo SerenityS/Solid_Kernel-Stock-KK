@@ -2740,8 +2740,6 @@ static int get_prop_charge_type(struct pm8921_chg_chip *chip)
 	return POWER_SUPPLY_CHARGE_TYPE_NONE;
 }
 
-<<<<<<< HEAD
-=======
 static int get_prop_batt_status(struct pm8921_chg_chip *chip)
 {
 	int batt_state = POWER_SUPPLY_STATUS_DISCHARGING;
@@ -5486,7 +5484,6 @@ static int is_charging_finished(struct pm8921_chg_chip *chip,
 		if (vcp == 1)
 			return CHG_IN_PROGRESS;
 
-<<<<<<< HEAD
 #ifdef CONFIG_LGE_PM
 		rc = pm_chg_get_rt_status(chip, VBATDET_LOW_IRQ);
 		pr_debug("vbatdet_low = %d\n", rc);
@@ -5494,13 +5491,10 @@ static int is_charging_finished(struct pm8921_chg_chip *chip,
 			return CHG_IN_PROGRESS;
 #endif
 
-=======
 		vbatdet_low = pm_chg_get_rt_status(chip, VBATDET_LOW_IRQ);
 		pr_debug("vbatdet_low = %d\n", vbatdet_low);
 		if (vbatdet_low ==  1)
 		    return CHG_IN_PROGRESS;
-		
->>>>>>> aff4708... BLX Added
 		/* reset count if battery is hot/cold */
 		rc = pm_chg_get_rt_status(chip, BAT_TEMP_OK_IRQ);
 		pr_debug("batt_temp_ok = %d\n", rc);
@@ -5679,11 +5673,10 @@ static void btc_override_worker(struct work_struct *work)
 	}
 
 	rc = get_prop_batt_temp(chip, &decidegc);
-=======
+
 	
 	/* reset count if battery chg current is more than iterm */
 	rc = pm_chg_iterm_get(chip, &iterm_programmed);
->>>>>>> aff4708... BLX Added
 	if (rc) {
 		pr_info("Failed to read temperature\n");
 		goto fail_btc_temp;
